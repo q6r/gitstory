@@ -1,0 +1,54 @@
+gitstory · story-repo  (main @ 1e8b39c5fb52)
+████████████████████████████████████████████████████████████████████████
+826 commits  ·  15 authors  ·  639 active days  ·  +16,379 / -4,619 lines
+2021-01-05 → 2026-11-09  (5y 10m)
+
+Activity
+  last 52 weeks  ▄▃▂▁▄▃▄▃▃█▃▄▃▂▄▃▃▃▄▃▃▄▁▅▃▃▄▃▂▃▃▃▃▃▂▃▃▂▁▃▂▂▃▁▃▁▂▄▂▂▃▂
+  streak       current 4 days, longest 21 days (2024-02-05 → 2024-02-25)
+  chronotype   Nine-to-five
+               early bird 12%, nine-to-five 54%, evening coder 15%, night owl 19%
+
+Week x hour (local time)
+       0     6     12    18    
+  Mon  ▒··▒··▒▒▒▓▓▒··▓▓▒░·▒▒▒░▓
+  Tue  ░··▒··░░░▒█░·░▓▒▒▓░▒▒▒░░
+  Wed  ▒··▒··▒░░▓▒▒·░▒▓▒▒▒▒░░░▒
+  Thu  ▓··▒··▒▒▒▓▓▒·░██▓▓░░▒▒▒▒
+  Fri  ▒░·▒··▒░▒▒▒▒·░▒█▒▓░▒░░░░
+  Sat  ░··▒··░░·░░░··░░░░░░░░░░
+  Sun  ░··▒··░·░▒░░░·▒·░░░░░░░░
+
+Top authors
+  Ada Lovelace           ██████████████    208   25%
+  Grace Hopper           ███████████░░░    169   20%
+  Zoë Müller             ████████░░░░░░    116   14%
+  João Silva             ████████░░░░░░    112   14%
+  李雷                   ██████░░░░░░░░     86   10%
+  Alan Turing            █████░░░░░░░░░     73    9%
+
+Languages
+  Python                 ██████████████        47%
+  JSON                   ███████░░░░░░░        22%
+  TypeScript             █████░░░░░░░░░        16%
+  Markdown               ████░░░░░░░░░░        13%
+  CSS                    ░░░░░░░░░░░░░░         1%
+  Rust                   ░░░░░░░░░░░░░░         1%
+
+Hot files
+  src/app/core.py                                                      158 commits    1,508 lines
+  src/app/helpers.py                                                    53 commits      524 lines
+  package.json                                                          55 commits      506 lines
+  src/app/mod_38.py                                                     55 commits      477 lines
+  src/app/models.py                                                     52 commits      469 lines
+
+Commit messages
+  types   feat 16%, fix 11%, build 8%, docs 5%, chore 4%, refactor 3%
+  words   bump, add, cache, router, login, introduce, remove, docs
+
+Records
+  busiest day      2024-09-12  (17 commits)
+  biggest commit   chore: vendor the seed dataset  (4,000 lines)
+  longest gap      71 days (2023-06-02 → 2023-08-13)
+  bus factor       3 (a heuristic)
+  releases         14 tags, latest v2.3.1 49 days ago

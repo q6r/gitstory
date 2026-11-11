@@ -1,0 +1,131 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "gitstory"
+dynamic = ["version"]
+description = "Your repository's story, animated: a self-contained HTML dashboard, JSON metrics and an animated SVG card from any git repository. Zero runtime dependencies."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "q6r" }]
+keywords = ["git", "statistics", "analytics", "dashboard", "svg", "readme", "github-profile", "wrapped"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Environment :: Console",
+  "Environment :: Web Environment",
+  "Intended Audience :: Developers",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Topic :: Software Development :: Version Control :: Git",
+  "Typing :: Typed",
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.3",
+  "coverage>=7.6",
+  "ruff>=0.8",
+  "mypy>=1.13",
+]
+
+[project.urls]
+Homepage = "https://github.com/q6r/gitstory"
+Repository = "https://github.com/q6r/gitstory"
+Issues = "https://github.com/q6r/gitstory/issues"
+Changelog = "https://github.com/q6r/gitstory/blob/main/CHANGELOG.md"
+
+[project.scripts]
+gitstory = "gitstory.cli:main"
+
+[tool.hatch.version]
+path = "src/gitstory/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/gitstory"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "/src", "/tests", "/docs", "/examples",
+  "/README.md", "/README.pt-BR.md", "/CHANGELOG.md", "/CONTRIBUTING.md", "/SECURITY.md", "/LICENSE",
+]
+exclude = ["/docs/screenshots"]
+
+# ---------------------------------------------------------------- ruff
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+src = ["src", "tests"]
+extend-exclude = [".venv"]
+
+[tool.ruff.lint]
+select = [
+  "E", "W",   # pycodestyle
+  "F",        # pyflakes
+  "I",        # isort
+  "N",        # pep8-naming
+  "D1",       # public docstrings are required
+  "UP",       # pyupgrade
+  "B",        # bugbear
+  "A",        # builtins shadowing
+  "C4",       # comprehensions
+  "SIM",      # simplify
+  "PT",       # pytest style
+  "RUF",
+  "S",        # bandit
+  "PERF",
+  "PTH",      # pathlib
+  "RET",
+  "ARG",
+]
+ignore = [
+  "D105",     # magic methods
+  "D107",     # __init__ (documented on the class)
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["D", "S101", "S105", "S106", "S108", "S311", "S314", "S603", "S607", "ARG001", "ARG002", "PLR2004"]
+"examples/**" = ["D", "S603", "S607"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+# ---------------------------------------------------------------- mypy
+[tool.mypy]
+python_version = "3.10"
+strict = true
+files = ["src"]
+warn_unreachable = true
+warn_unused_ignores = true
+show_error_codes = true
+
+# -------------------------------------------------------------- pytest
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["tests/fixtures"]
+addopts = "-ra --strict-markers --strict-config"
+filterwarnings = ["error"]
+
+# ------------------------------------------------------------ coverage
+[tool.coverage.run]
+source = ["gitstory"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false
+fail_under = 85
+exclude_also = [
+  "if TYPE_CHECKING:",
+  "raise NotImplementedError",
+  "\\.\\.\\.$",
+]
