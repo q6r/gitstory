@@ -67,16 +67,17 @@ def detect_style(
 
 def enable_windows_vt() -> bool:
     """Turn on ANSI escape processing in a Windows console; True if colours can be used."""
-    if sys.platform != "win32":
-        return True
-    import ctypes
+    enabled = True
+    if sys.platform == "win32":
+        import ctypes
 
-    kernel32 = ctypes.windll.kernel32
-    handle = kernel32.GetStdHandle(-11)
-    mode = ctypes.c_uint32()
-    if not kernel32.GetConsoleMode(handle, ctypes.byref(mode)):
-        return False
-    return bool(kernel32.SetConsoleMode(handle, mode.value | 0x0004))
+        kernel32 = ctypes.windll.kernel32
+        handle = kernel32.GetStdHandle(-11)
+        mode = ctypes.c_uint32()
+        enabled = bool(kernel32.GetConsoleMode(handle, ctypes.byref(mode))) and bool(
+            kernel32.SetConsoleMode(handle, mode.value | 0x0004)
+        )
+    return enabled
 
 
 class _Painter:

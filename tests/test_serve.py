@@ -8,6 +8,7 @@ import http.client
 import json
 import socket
 import struct
+import sys
 import threading
 import time
 import xml.etree.ElementTree as ET
@@ -741,7 +742,13 @@ def test_garbage_gets_a_json_error_not_a_traceback(live: Running) -> None:
 
 def test_an_unsupported_protocol_version_is_refused(live: Running) -> None:
     reply = live.raw(b"GET / HTTP/9.9\r\nHost: 127.0.0.1:%d\r\n\r\n" % live.port)
-    assert reply.split(b" ", 2)[1] == b"505"
+    # Python 3.13 and later answer with a proper "505" status line. Earlier http.server versions
+    # answer a request whose version they cannot parse in the HTTP/0.9 style (no status line, just
+    # the error text). Both refuse it.
+    status_line = reply.split(b"\r\n", 1)[0]
+    assert b"505" in status_line or b"Invalid HTTP version" in reply
+    assert b"<!doctype html" not in reply.lower()  # the page was not served
+    assert live.get("/")[0] == 200  # and the server carries on
 
 
 def test_an_overlong_request_line_is_refused(live: Running) -> None:
@@ -862,6 +869,10 @@ def test_shutdown_stops_the_loop_and_frees_the_port(
     assert time.monotonic() - started < 5  # an idle client cannot hold the server up
     connection.close()
     with socket.socket() as probe:
+        if sys.platform != "win32":
+            # Linux and macOS keep the closed connection in TIME_WAIT, which blocks a plain bind
+            # for a while; that is not the server still listening (the check below proves it).
+            probe.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         probe.bind(("127.0.0.1", free_port))  # the port is free again
     with socket.socket() as client:
         client.settimeout(1)
